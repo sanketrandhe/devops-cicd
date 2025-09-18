@@ -13,23 +13,26 @@ devops-cicd/
 ---
 
 1. app/app.py
-print("Hello, World from Dockerized App!")
+   ```
+   print("Hello, World from Dockerized App!")
+   ```
+3. docker/Dockerfile
+   ```
+   FROM python:3.12-slim
+   WORKDIR /app
+   COPY app/app.py .
+   CMD ["python", "app.py"]
+   ```
 
-2. docker/Dockerfile
-FROM python:3.12-slim
+4. jenkins/Jenkinsfile
 
-WORKDIR /app
-COPY app/app.py .
-
-CMD ["python", "app.py"]
-
-3. jenkins/Jenkinsfile
+```
 pipeline {
     agent any
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/<username>/<repo>.git'
+                git 'https://github.com/sanketrandhe/devops-cicd'
             }
         }
         stage('Build Docker Image') {
@@ -53,8 +56,8 @@ pipeline {
         }
     }
 }
-
-4. README.md
+```
+6. README.md
 # DevOps CI/CD Project: Jenkins + Docker + GitHub + AWS EC2
 
 This project demonstrates a **CI/CD pipeline** where:
